@@ -9,13 +9,20 @@ const userSchema = new Schema ({
     },
     email: {
         type: mongoose.SchemaTypes.Email,
-        required: [true, 'E-mail is required']
+        required: [true, 'E-mail is required'],
+        unique: true,
+        match: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     },
     phone: {
         type: Number,
         required: [true, 'Phone number is required']
     },
-    geometry: GeoSchema
+    password: {
+        type: String,
+        required: [true, 'password is required']
+    }
+
+    // geometry: GeoSchema
 });
 const User = mongoose.model('user', userSchema);
 export default User;

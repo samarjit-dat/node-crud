@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
-import routes from './routes/app'
+import userRoutes from './routes/user'
 
 const app = express();
 
@@ -21,11 +21,11 @@ app.use(bodyParser.json());
 // error handling 
 app.use((err, req, res, next) => {
     console.log(err);
-    // res.sendStatus(401).json(err);
+    res.status(500).json({error: err});
 });
 
 //router initialize
-app.use('/api', routes);
+app.use('/api/user', userRoutes);
 
 
 // listen port 

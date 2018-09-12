@@ -4,7 +4,6 @@ import process from '../environment'
 const AuthCheck = (req, res, next) => {
     try {
         const _token = req.headers.authorization.split(" ")[1];
-        console.log(_token);
         const decode = jwt.verify(_token, process.env.JWT_KEY);
         req.userData = decode;
         next();

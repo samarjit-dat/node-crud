@@ -10,8 +10,10 @@
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "express-async-errors": "^3.0.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.12",
+    "mongoose-mongodb-errors": "0.0.2",
     "mongoose-type-email": "^1.0.9"
   },
   "keywords": [],

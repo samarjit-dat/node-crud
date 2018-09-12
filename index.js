@@ -1,15 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
+import mongoDbErrors from 'mongoose-mongodb-errors'
+import expressAsyncErrors from 'express-async-errors'
 import userRoutes from './routes/user'
 
 const app = express();
 
 // connect mongodb
-mongoose.connect('mongodb://localhost/userCrud', {useNewUrlParser: true});
-mongoose.set({useCreateIndex: true});
-
-mongoose.Promise = global.Promise;
+import './mongo'
 
 // body parser use
 app.use(bodyParser.urlencoded({
@@ -18,15 +17,23 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-// error handling 
-app.use((err, req, res, next) => {
-    console.log(err);
-    res.status(500).json({error: err});
-});
-
 //router initialize
 app.use('/api/user', userRoutes);
 
+// 404 Not Found
+app.use((req, res, next) => {
+    req.status = 404;
+    const err = new Error('Page not found');
+    next(err);
+})
 
+// error handling 
+app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(req.status || 500).json({
+        message: err.message,
+        stack: err.stack
+    });
+});
 // listen port 
 app.listen(process.env.port || 4000, () => console.log('port is listening...'));

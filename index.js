@@ -27,6 +27,16 @@ app.use((req, res, next) => {
     next(err);
 })
 
+// production mode
+if (app.get("env") === "production") {
+    app.use((err, req, res, next) => {
+        console.log(err);
+        res.status(req.status || 500).json({
+            message: err.message
+        });
+    });
+}
+
 // error handling 
 app.use((err, req, res, next) => {
     console.log(err);
